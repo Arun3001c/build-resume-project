@@ -1,0 +1,249 @@
+/* src/components/preview/templates/TechnicalTemplate.css */
+
+.technical-template {
+  font-family: 'Courier New', Courier, monospace;
+  color: #1e293b;
+  line-height: 1.4;
+  font-size: 10pt;
+}
+
+/* Header */
+.technical-header {
+  border: 2px solid #1e293b;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.technical-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 12px 0;
+  font-family: 'Courier New', monospace;
+}
+
+.technical-contact {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  font-size: 9pt;
+}
+
+.grid-item {
+  display: flex;
+  gap: 4px;
+}
+
+.contact-label {
+  font-weight: 600;
+  color: #475569;
+  min-width: 50px;
+}
+
+/* Sections */
+.technical-section {
+  margin-bottom: 20px;
+}
+
+.technical-title {
+  font-size: 12pt;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: #1e293b;
+  padding: 6px 12px;
+  margin: 0 0 12px 0;
+  font-family: 'Courier New', monospace;
+}
+
+.technical-summary {
+  font-size: 10pt;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0 12px;
+}
+
+/* Skills Grid */
+.technical-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding: 0 12px;
+}
+
+.technical-box {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 8px;
+  font-size: 9pt;
+  text-align: center;
+  color: #475569;
+  font-family: 'Courier New', monospace;
+}
+
+/* Experience */
+.technical-item {
+  padding: 0 12px;
+  margin-bottom: 16px;
+}
+
+.technical-header-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 4px;
+}
+
+.technical-position {
+  font-size: 11pt;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+  font-family: 'Courier New', monospace;
+}
+
+.technical-date {
+  font-size: 9pt;
+  color: #64748b;
+  white-space: nowrap;
+  font-family: 'Courier New', monospace;
+}
+
+.technical-subheader {
+  font-size: 10pt;
+  color: #475569;
+  margin-bottom: 6px;
+}
+
+.technical-company {
+  font-weight: 500;
+}
+
+.technical-location {
+  color: #64748b;
+}
+
+.technical-description {
+  font-size: 10pt;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0;
+  font-family: 'Courier New', monospace;
+}
+
+/* Projects */
+.technical-project-name {
+  font-size: 11pt;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 4px 0;
+  font-family: 'Courier New', monospace;
+}
+
+.technical-technologies {
+  font-size: 9pt;
+  color: #64748b;
+  margin: 0 0 6px 0;
+}
+
+.tech-label {
+  font-weight: 600;
+  color: #475569;
+}
+
+.technical-link {
+  font-size: 9pt;
+  color: #2563eb;
+  margin: 4px 0 0 0;
+}
+
+.link-label {
+  font-weight: 600;
+  color: #475569;
+}
+
+/* Education */
+.technical-degree {
+  font-size: 11pt;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+  font-family: 'Courier New', monospace;
+}
+
+.technical-institution {
+  font-size: 10pt;
+  color: #475569;
+  margin: 4px 0 0 0;
+}
+
+.technical-gpa {
+  font-size: 9pt;
+  color: #64748b;
+  margin: 4px 0 0 0;
+}
+
+/* Certifications */
+.certification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2px;
+}
+
+.technical-cert-name {
+  font-size: 10pt;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.technical-issuer {
+  font-size: 9pt;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Languages */
+.technical-languages {
+  font-size: 10pt;
+  color: #475569;
+  margin: 0;
+  padding: 0 12px;
+}
+
+/* Achievements & Interests */
+.technical-content {
+  font-size: 10pt;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0 12px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .technical-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .technical-contact {
+    grid-template-columns: 1fr;
+  }
+  
+  .technical-name {
+    font-size: 20px;
+  }
+  
+  .technical-header-item {
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .technical-date {
+    font-size: 8pt;
+  }
+  
+  .technical-title {
+    font-size: 11pt;
+  }
+}

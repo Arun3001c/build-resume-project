@@ -1,0 +1,282 @@
+/* src/components/preview/templates/CreativeTemplate.css */
+
+.creative-template {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #1e293b;
+  line-height: 1.5;
+}
+
+/* Header */
+.creative-header {
+  margin-bottom: 24px;
+}
+
+.creative-header-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.creative-photo {
+  width: 70px;
+  height: 70px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 2px solid #7c3aed;
+  box-shadow: 0 4px 8px rgba(124, 58, 237, 0.2);
+}
+
+.header-info {
+  flex: 1;
+}
+
+.creative-name {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.5px;
+}
+
+.creative-accent {
+  height: 4px;
+  width: 60px;
+  background: linear-gradient(90deg, #7c3aed, #8b5cf6);
+  margin-bottom: 12px;
+  border-radius: 2px;
+}
+
+.creative-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 11px;
+  color: #64748b;
+}
+
+/* Highlight Section */
+.highlight-section {
+  background-color: #f8fafc;
+  padding: 16px;
+  border-radius: 8px;
+  border-left: 4px solid #7c3aed;
+  margin-bottom: 24px;
+}
+
+.creative-summary {
+  font-size: 12px;
+  color: #475569;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Sections */
+.creative-section {
+  margin-bottom: 20px;
+  padding-left: 16px;
+  border-left: 1px solid #e2e8f0;
+}
+
+.creative-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.creative-title.with-dot::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background-color: #7c3aed;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Experience */
+.creative-item {
+  margin-bottom: 16px;
+}
+
+.creative-position {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 4px 0;
+}
+
+.creative-subheader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #475569;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.creative-company {
+  font-weight: 500;
+}
+
+.experience-separator {
+  color: #cbd5e1;
+}
+
+.creative-date {
+  color: #64748b;
+}
+
+.creative-description {
+  font-size: 12px;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Projects */
+.projects-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.creative-card {
+  background-color: #f8fafc;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.creative-project-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 4px 0;
+}
+
+.creative-technologies {
+  font-size: 11px;
+  color: #8b5cf6;
+  margin: 0 0 6px 0;
+  font-weight: 500;
+}
+
+/* Two Column Layout */
+.creative-two-column {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Education */
+.creative-degree {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 2px 0;
+}
+
+.creative-institution {
+  font-size: 12px;
+  color: #475569;
+  margin: 0 0 2px 0;
+}
+
+/* Skills */
+.creative-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.creative-skill-tag {
+  background-color: #1e293b;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 10px;
+  font-weight: 500;
+  border: 1px solid #334155;
+}
+
+/* Certifications */
+.creative-cert-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 2px 0;
+}
+
+.creative-issuer {
+  font-size: 11px;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Languages */
+.creative-language {
+  font-size: 12px;
+  font-weight: 500;
+  color: #1e293b;
+}
+
+.creative-proficiency {
+  font-size: 11px;
+  color: #64748b;
+}
+
+/* Achievements & Interests */
+.creative-content {
+  font-size: 12px;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .creative-two-column {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .creative-header-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .creative-photo {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .creative-name {
+    font-size: 24px;
+  }
+  
+  .creative-contact {
+    font-size: 10px;
+    gap: 8px;
+  }
+  
+  .creative-subheader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  
+  .experience-separator {
+    display: none;
+  }
+}

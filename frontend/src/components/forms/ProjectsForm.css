@@ -1,0 +1,151 @@
+.projects-form {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+.projects-form .form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.projects-form .header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.projects-form .form-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #2563eb;
+}
+
+.projects-form h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.projects-form .add-button {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.375rem 0.75rem;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.projects-form .add-button:hover {
+  background-color: #2563eb;
+}
+
+.projects-form .button-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.project-item {
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background-color: #f9fafb;
+}
+
+.project-item .item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.project-item .item-number {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.project-item .delete-button {
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  color: #dc2626;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-item .delete-button:hover {
+  background-color: #fef2f2;
+}
+
+.project-item .delete-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.project-item .form-group {
+  margin-bottom: 1rem;
+}
+
+.project-item .form-group:last-child {
+  margin-bottom: 0;
+}
+
+.project-item .form-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.375rem;
+}
+
+.project-item .form-group input,
+.project-item .textarea-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+}
+
+.project-item .form-group input:focus,
+.project-item .textarea-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.project-item .textarea-input {
+  min-height: 5rem;
+  resize: vertical;
+}
+
+@media (min-width: 768px) {
+  .projects-form {
+    padding: 2rem;
+  }
+}
