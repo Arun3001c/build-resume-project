@@ -19,7 +19,7 @@ import './ResumeBuilder.css';
 
 const ResumeBuilder = () => {
   const navigate = useNavigate();
-  const { resumeData } = useResume();
+  const { resumeData, selectedTemplate } = useResume();
   const [showPreview, setShowPreview] = useState(true);
   const [isDownloading, setIsDownloading] = useState(false);
 
@@ -38,8 +38,8 @@ const ResumeBuilder = () => {
         ? resumeData.personalInfo.fullName.replace(/\s+/g, '_') 
         : 'resume';
       
-      // Download the DOCX file
-      await downloadDOCX(resumeData, filename);
+      // Download the DOCX file with the selected template
+      await downloadDOCX(resumeData, filename, selectedTemplate);
       
       // Show success message
       if (window.toast) {

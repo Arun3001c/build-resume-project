@@ -1,12 +1,64 @@
 // src/pages/LandingPage.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import { FileText, Download, Eye, Sparkles } from 'lucide-react';
+import resumeImage from '../assets/resume.png';
 import './LandingPage.css';
+
+const WelcomeScreen = ({ onContinue }) => {
+  return (
+    <div className="welcome-screen">
+      <div className="welcome-content">
+        <div className="welcome-text-section">
+          <h2 className="welcome-title">
+            Just Follow these <br />simple steps <br />
+          </h2>
+
+          <div className="welcome-steps">
+            <p className="welcome-step">
+              1. <strong>Select a template</strong> from our library of professional designs
+            </p>
+            <p className="welcome-step">
+              2. <strong>Build your resume</strong> with our industry-specific bullet points
+            </p>
+            <p className="welcome-step">
+              3. <strong>Customize the details</strong> and wrap it up. You're ready to send!
+            </p>
+          </div>
+        </div>
+
+        <div className="welcome-image-section">
+          <div className="welcome-image-container">
+            <img
+              src={resumeImage}
+              alt="Resume templates"
+              className="welcome-resume-image"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="welcome-button-container">
+        <Button
+          onClick={onContinue}
+          className="welcome-next-button"
+        >
+          Next
+        </Button>
+      </div>
+    </div>
+  );
+};
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const [showWelcome, setShowWelcome] = useState(true);
+
+  const handleContinue = () => {
+    setShowWelcome(false);
+    navigate('/templates');
+  };
 
   return (
     <div className="landing-page">
@@ -28,39 +80,36 @@ const LandingPage = () => {
 
       {/* Hero Section */}
       <section className="hero-section">
-        <div className="container hero-container">
-          <div className="badge">
-            <Sparkles className="badge-icon" />
-            Professional Resume Builder
+        {showWelcome ? (
+          <WelcomeScreen onContinue={handleContinue} />
+        ) : (
+          <div className="container hero-container">
+            <div className="badge">
+              <Sparkles className="badge-icon" />
+              Professional Resume Builder
+            </div>
+            
+            <h1 className="hero-title">
+              Create Your Perfect Resume in
+              <span className="hero-highlight"> Minutes</span>
+            </h1>
+            
+            <p className="hero-description">
+              Build ATS-friendly resumes with our intuitive editor. Choose from professional templates,
+              edit in real-time, and download as DOCX - all without page refresh.
+            </p>
+            
+            <div className="hero-buttons">
+              <Button 
+                onClick={() => navigate('/templates')}
+                size="lg"
+                className="primary-btn"
+              >
+                Start Building
+              </Button>
+            </div>
           </div>
-          
-          <h1 className="hero-title">
-            Create Your Perfect Resume in
-            <span className="hero-highlight"> Minutes</span>
-          </h1>
-          
-          <p className="hero-description">
-            Build ATS-friendly resumes with our intuitive editor. Choose from professional templates,
-            edit in real-time, and download as DOCX - all without page refresh.
-          </p>
-          
-          <div className="hero-buttons">
-            <Button 
-              onClick={() => navigate('/templates')}
-              size="lg"
-              className="primary-btn"
-            >
-              Start Building
-            </Button>
-            {/* <Button 
-              variant="outline"
-              size="lg"
-              className="secondary-btn"
-            >
-              View Templates
-            </Button> */}
-          </div>
-        </div>
+        )}
       </section>
 
       {/* Features Section */}

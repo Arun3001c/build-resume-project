@@ -21,7 +21,7 @@ const ModernTemplate = () => {
   return (
     <div className="modern-template">
       {/* Header */}
-      <div className="template-header">
+      <div className="template-header modern-header">
         <div className="header-content">
           {personalInfo.profilePhoto && (
             <img 

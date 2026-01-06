@@ -8,7 +8,11 @@
 }
 
 /* Header */
-.technical-header {
+.technical-header.template-header,.technical-header {
+  position: static !important;
+  top: auto !important;
+  z-index: auto !important;
+  background-color: transparent !important;
   border: 2px solid #1e293b;
   padding: 16px;
   margin-bottom: 24px;

@@ -7,10 +7,15 @@
 }
 
 /* Header */
-.template-header {
+.template-header.modern-header,
+.modern-header {
   border-bottom: 4px solid #2563eb;
   padding-bottom: 20px;
   margin-bottom: 24px;
+  position: static !important;
+  top: auto !important;
+  z-index: auto !important;
+  background-color: transparent !important;
 }
 
 .header-content {

@@ -4,17 +4,20 @@
   font-family: Georgia, 'Times New Roman', Times, serif;
   color: #1e293b;
   line-height: 1.5;
+  position: relative;
+  width: 100%;
 }
 
-/* Header */
+/* Header - Ensure no sticky/fixed positioning */
+.template-header.classic-header,
 .classic-header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background-color: white;
   text-align: center;
   padding-bottom: 16px;
   margin-bottom: 24px;
+  position: static !important;
+  top: auto !important;
+  z-index: auto !important;
+  background-color: transparent !important;
 }
 
 .classic-name {
@@ -49,6 +52,8 @@
 /* Sections */
 .classic-section {
   margin-bottom: 20px;
+  position: static;
+  clear: both;
 }
 
 .classic-title {

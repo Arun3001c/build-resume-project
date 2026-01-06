@@ -5,84 +5,215 @@ import { saveAs } from 'file-saver';
 /**
  * Export resume as DOCX
  * @param {Object} resumeData - The resume data
+ * @param {string} template - The selected template name (default: 'modern')
  * @returns {Promise<Blob>} - DOCX blob
  */
-export const exportToDOCX = async (resumeData) => {
+// Template configuration mapping
+const templateConfig = {
+  modern: {
+    headerAlignment: AlignmentType.LEFT,
+    contactSeparator: ' | ',
+    contactFormat: 'inline', // inline, labeled, grid
+    summaryTitle: 'PROFESSIONAL SUMMARY',
+    experienceTitle: 'WORK EXPERIENCE',
+    educationTitle: 'EDUCATION',
+    skillsTitle: 'SKILLS',
+    skillsSeparator: ' • ',
+    projectsTitle: 'PROJECTS',
+    certificationsTitle: 'CERTIFICATIONS',
+    languagesTitle: 'LANGUAGES',
+    achievementsTitle: 'ACHIEVEMENTS',
+    interestsTitle: 'INTERESTS',
+  },
+  classic: {
+    headerAlignment: AlignmentType.CENTER,
+    contactSeparator: ' | ',
+    contactFormat: 'inline',
+    summaryTitle: 'PROFESSIONAL SUMMARY',
+    experienceTitle: 'PROFESSIONAL EXPERIENCE',
+    educationTitle: 'EDUCATION',
+    skillsTitle: 'SKILLS',
+    skillsSeparator: ' • ',
+    projectsTitle: 'PROJECTS',
+    certificationsTitle: 'CERTIFICATIONS',
+    languagesTitle: 'LANGUAGES',
+    achievementsTitle: 'ACHIEVEMENTS',
+    interestsTitle: 'INTERESTS',
+  },
+  minimal: {
+    headerAlignment: AlignmentType.CENTER,
+    contactSeparator: ' • ',
+    contactFormat: 'inline',
+    summaryTitle: '', // No title in minimal
+    experienceTitle: 'EXPERIENCE',
+    educationTitle: 'EDUCATION',
+    skillsTitle: 'SKILLS',
+    skillsSeparator: ', ',
+    projectsTitle: 'PROJECTS',
+    certificationsTitle: 'CERTIFICATIONS',
+    languagesTitle: 'LANGUAGES',
+    achievementsTitle: 'ACHIEVEMENTS',
+    interestsTitle: 'INTERESTS',
+  },
+  executive: {
+    headerAlignment: AlignmentType.LEFT,
+    contactSeparator: ' | ',
+    contactFormat: 'labeled',
+    summaryTitle: 'EXECUTIVE PROFILE',
+    experienceTitle: 'PROFESSIONAL EXPERIENCE',
+    educationTitle: 'EDUCATION',
+    skillsTitle: 'CORE COMPETENCIES',
+    skillsSeparator: ' • ',
+    projectsTitle: 'KEY PROJECTS',
+    certificationsTitle: 'CERTIFICATIONS',
+    languagesTitle: 'LANGUAGES',
+    achievementsTitle: 'ACHIEVEMENTS',
+    interestsTitle: 'INTERESTS',
+  },
+  technical: {
+    headerAlignment: AlignmentType.LEFT,
+    contactSeparator: ' | ',
+    contactFormat: 'labeled',
+    summaryTitle: '// SUMMARY',
+    experienceTitle: '// EXPERIENCE',
+    educationTitle: '// EDUCATION',
+    skillsTitle: '// TECHNICAL SKILLS',
+    skillsSeparator: ' • ',
+    projectsTitle: '// PROJECTS',
+    certificationsTitle: '// CERTIFICATIONS',
+    languagesTitle: '// LANGUAGES',
+    achievementsTitle: '// ACHIEVEMENTS',
+    interestsTitle: '// INTERESTS',
+  },
+  creative: {
+    headerAlignment: AlignmentType.LEFT,
+    contactSeparator: ' ',
+    contactFormat: 'inline',
+    summaryTitle: 'ABOUT ME',
+    experienceTitle: 'EXPERIENCE',
+    educationTitle: 'EDUCATION',
+    skillsTitle: 'SKILLS',
+    skillsSeparator: ' • ',
+    projectsTitle: 'FEATURED PROJECTS',
+    certificationsTitle: 'CERTIFICATIONS',
+    languagesTitle: 'LANGUAGES',
+    achievementsTitle: 'ACHIEVEMENTS',
+    interestsTitle: 'INTERESTS',
+  },
+};
+
+export const exportToDOCX = async (resumeData, template = 'modern') => {
   try {
-    console.log('Exporting to DOCX:', resumeData);
+    console.log('Exporting to DOCX with template:', template, resumeData);
+    
+    // Get template configuration or default to modern
+    const config = templateConfig[template] || templateConfig.modern;
     
     const sections = [];
 
-    // Personal Info Section
+    // Personal Info Section - Template-specific formatting
     const personalInfo = resumeData.personalInfo || {};
+    
     sections.push(
       new Paragraph({
         text: personalInfo.fullName || 'Your Name',
         heading: HeadingLevel.HEADING_1,
-        alignment: AlignmentType.CENTER,
+        alignment: config.headerAlignment,
         spacing: {
           after: 200,
         },
       })
     );
 
-    // Contact Information
-    const contactLines = [];
-    if (personalInfo.email) contactLines.push(personalInfo.email);
-    if (personalInfo.phone) contactLines.push(personalInfo.phone);
-    if (personalInfo.location) contactLines.push(personalInfo.location);
-    
-    if (contactLines.length > 0) {
-      sections.push(
-        new Paragraph({
-          alignment: AlignmentType.CENTER,
-          spacing: { after: 200 },
-          children: [
-            new TextRun({
-              text: contactLines.join(' | '),
-              size: 20,
-            }),
-          ],
-        })
-      );
+    // Contact Information - Template-specific formatting
+    if (config.contactFormat === 'labeled') {
+      // Executive and Technical templates use labeled format
+      const contactItems = [];
+      if (personalInfo.email) contactItems.push({ label: 'Email:', value: personalInfo.email });
+      if (personalInfo.phone) contactItems.push({ label: 'Phone:', value: personalInfo.phone });
+      if (personalInfo.location) contactItems.push({ label: 'Location:', value: personalInfo.location });
+      if (personalInfo.linkedin) contactItems.push({ label: 'LinkedIn:', value: personalInfo.linkedin });
+      if (personalInfo.website) contactItems.push({ label: template === 'technical' ? 'Web:' : 'Website:', value: personalInfo.website });
+      
+      if (contactItems.length > 0) {
+        contactItems.forEach((item, index) => {
+          sections.push(
+            new Paragraph({
+              alignment: config.headerAlignment,
+              spacing: { after: index === contactItems.length - 1 ? 200 : 50 },
+              children: [
+                new TextRun({
+                  text: `${item.label} ${item.value}`,
+                  size: 20,
+                }),
+              ],
+            })
+          );
+        });
+      }
+    } else {
+      // Inline format for other templates
+      const contactLines = [];
+      if (personalInfo.email) contactLines.push(personalInfo.email);
+      if (personalInfo.phone) contactLines.push(personalInfo.phone);
+      if (personalInfo.location) contactLines.push(personalInfo.location);
+      
+      if (contactLines.length > 0) {
+        sections.push(
+          new Paragraph({
+            alignment: config.headerAlignment,
+            spacing: { after: 200 },
+            children: [
+              new TextRun({
+                text: contactLines.join(config.contactSeparator),
+                size: 20,
+              }),
+            ],
+          })
+        );
+      }
+
+      // LinkedIn and Website
+      const linkLines = [];
+      if (personalInfo.linkedin) linkLines.push(personalInfo.linkedin);
+      if (personalInfo.website) linkLines.push(personalInfo.website);
+      
+      if (linkLines.length > 0) {
+        sections.push(
+          new Paragraph({
+            alignment: config.headerAlignment,
+            spacing: { after: 400 },
+            children: [
+              new TextRun({
+                text: linkLines.join(config.contactSeparator),
+                size: 20,
+              }),
+            ],
+          })
+        );
+      }
     }
 
-    // LinkedIn and Website
-    const linkLines = [];
-    if (personalInfo.linkedin) linkLines.push(`LinkedIn: ${personalInfo.linkedin}`);
-    if (personalInfo.website) linkLines.push(`Website: ${personalInfo.website}`);
-    
-    if (linkLines.length > 0) {
-      sections.push(
-        new Paragraph({
-          alignment: AlignmentType.CENTER,
-          spacing: { after: 400 },
-          children: [
-            new TextRun({
-              text: linkLines.join(' | '),
-              size: 20,
-            }),
-          ],
-        })
-      );
-    }
-
-    // Summary Section
+    // Summary Section - Template-specific title
     if (resumeData.summary) {
-      sections.push(
-        new Paragraph({
-          text: 'PROFESSIONAL SUMMARY',
-          heading: HeadingLevel.HEADING_2,
-          spacing: { before: 200, after: 100 },
-          border: {
-            bottom: {
-              color: '000000',
-              space: 1,
-              style: BorderStyle.SINGLE,
-              size: 6,
+      if (config.summaryTitle) {
+        sections.push(
+          new Paragraph({
+            text: config.summaryTitle,
+            heading: HeadingLevel.HEADING_2,
+            spacing: { before: 200, after: 100 },
+            border: {
+              bottom: {
+                color: '000000',
+                space: 1,
+                style: BorderStyle.SINGLE,
+                size: 6,
+              },
             },
-          },
-        }),
+          })
+        );
+      }
+      sections.push(
         new Paragraph({
           text: resumeData.summary,
           spacing: { after: 300 },
@@ -90,11 +221,11 @@ export const exportToDOCX = async (resumeData) => {
       );
     }
 
-    // Work Experience Section
+    // Work Experience Section - Template-specific title
     if (resumeData.workExperience && resumeData.workExperience.length > 0) {
       sections.push(
         new Paragraph({
-          text: 'WORK EXPERIENCE',
+          text: config.experienceTitle,
           heading: HeadingLevel.HEADING_2,
           spacing: { before: 200, after: 100 },
           border: {
@@ -155,11 +286,11 @@ export const exportToDOCX = async (resumeData) => {
       });
     }
 
-    // Education Section
+    // Education Section - Template-specific title
     if (resumeData.education && resumeData.education.length > 0) {
       sections.push(
         new Paragraph({
-          text: 'EDUCATION',
+          text: config.educationTitle,
           heading: HeadingLevel.HEADING_2,
           spacing: { before: 200, after: 100 },
           border: {
@@ -211,11 +342,11 @@ export const exportToDOCX = async (resumeData) => {
       });
     }
 
-    // Skills Section
+    // Skills Section - Template-specific title and separator
     if (resumeData.skills && resumeData.skills.length > 0) {
       sections.push(
         new Paragraph({
-          text: 'SKILLS',
+          text: config.skillsTitle,
           heading: HeadingLevel.HEADING_2,
           spacing: { before: 200, after: 100 },
           border: {
@@ -228,17 +359,17 @@ export const exportToDOCX = async (resumeData) => {
           },
         }),
         new Paragraph({
-          text: resumeData.skills.join(' • '),
+          text: resumeData.skills.join(config.skillsSeparator),
           spacing: { after: 300 },
         })
       );
     }
 
-    // Projects Section
+    // Projects Section - Template-specific title
     if (resumeData.projects && resumeData.projects.length > 0) {
       sections.push(
         new Paragraph({
-          text: 'PROJECTS',
+          text: config.projectsTitle,
           heading: HeadingLevel.HEADING_2,
           spacing: { before: 200, after: 100 },
           border: {
@@ -306,11 +437,11 @@ export const exportToDOCX = async (resumeData) => {
       });
     }
 
-    // Certifications Section
+    // Certifications Section - Template-specific title
     if (resumeData.certifications && resumeData.certifications.length > 0) {
       sections.push(
         new Paragraph({
-          text: 'CERTIFICATIONS',
+          text: config.certificationsTitle,
           heading: HeadingLevel.HEADING_2,
           spacing: { before: 200, after: 100 },
           border: {
@@ -343,11 +474,11 @@ export const exportToDOCX = async (resumeData) => {
       sections.push(new Paragraph({ spacing: { after: 300 } }));
     }
 
-    // Languages Section
+    // Languages Section - Template-specific title
     if (resumeData.languages && resumeData.languages.length > 0) {
       sections.push(
         new Paragraph({
-          text: 'LANGUAGES',
+          text: config.languagesTitle,
           heading: HeadingLevel.HEADING_2,
           spacing: { before: 200, after: 100 },
           border: {
@@ -372,11 +503,11 @@ export const exportToDOCX = async (resumeData) => {
       sections.push(new Paragraph({ spacing: { after: 300 } }));
     }
 
-    // Achievements Section
+    // Achievements Section - Template-specific title
     if (resumeData.achievements) {
       sections.push(
         new Paragraph({
-          text: 'ACHIEVEMENTS',
+          text: config.achievementsTitle,
           heading: HeadingLevel.HEADING_2,
           spacing: { before: 200, after: 100 },
           border: {
@@ -395,11 +526,11 @@ export const exportToDOCX = async (resumeData) => {
       );
     }
 
-    // Interests Section
+    // Interests Section - Template-specific title
     if (resumeData.interests) {
       sections.push(
         new Paragraph({
-          text: 'INTERESTS',
+          text: config.interestsTitle,
           heading: HeadingLevel.HEADING_2,
           spacing: { before: 200, after: 100 },
           border: {
@@ -442,10 +573,12 @@ export const exportToDOCX = async (resumeData) => {
  * Download resume as DOCX file
  * @param {Object} resumeData - The resume data
  * @param {string} filename - The filename (without extension)
+ * @param {string} template - The selected template name
  */
-export const downloadDOCX = async (resumeData, filename = 'resume') => {
+export const downloadDOCX = async (resumeData, filename = 'resume', template = 'modern') => {
   try {
-    const blob = await exportToDOCX(resumeData);
+    console.log('📥 Downloading DOCX with template:', template);
+    const blob = await exportToDOCX(resumeData, template);
     saveAs(blob, `${filename}.docx`);
   } catch (error) {
     console.error('Error downloading DOCX:', error);

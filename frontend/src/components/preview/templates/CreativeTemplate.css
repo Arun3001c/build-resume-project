@@ -7,7 +7,11 @@
 }
 
 /* Header */
-.creative-header {
+.creative-header.template-header,.creative-header {
+  position: static !important;
+  top: auto !important;
+  z-index: auto !important;
+  background-color: transparent !important;
   margin-bottom: 24px;
 }
 

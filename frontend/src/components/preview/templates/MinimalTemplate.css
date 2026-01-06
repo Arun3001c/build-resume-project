@@ -7,8 +7,12 @@
 }
 
 /* Header */
-.minimal-header {
+.minimal-header.template-header,.minimal-header {
   margin-bottom: 24px;
+  position: static !important;
+  top: auto !important;
+  z-index: auto !important;
+  background-color: transparent !important;
 }
 
 .minimal-name {
