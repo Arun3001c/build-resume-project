@@ -2,17 +2,21 @@
 
 .resume-builder-page {
   min-height: 100vh;
-  background-color: #f8fafc;
+  /* background-color: #f8fafc; */
+    background: linear-gradient(135deg, #0f111a 0%, #12121f 50%, #0f111a 100%);
+
 }
 
 /* Header */
 .builder-header {
-  background-color: white;
+  /* background-color: white; */
+  background-color:  rgba(15, 17, 26, 0.95);
   border-bottom: 1px solid #e2e8f0;
   position: sticky;
   top: 0;
   z-index: 50;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 10px;
 }
 
 .header-container {
@@ -37,7 +41,8 @@
   gap: 8px;
   background-color: transparent;
   color: #64748b;
-  border: none;
+  /* border: none; */
+  border: 1px solid #cbd5e1;
   padding: 8px 16px;
   border-radius: 6px;
   cursor: pointer;
@@ -118,6 +123,7 @@
 .forms-section {
   display: flex;
   flex-direction: column;
+  margin-top: 30px;
   gap: 24px;
 }
 

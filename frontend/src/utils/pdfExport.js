@@ -1,5 +1,5 @@
 // src/utils/pdfExport.js
-import { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, BorderStyle } from 'docx';
+import { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, BorderStyle, Table, TableRow, TableCell, WidthType, ShadingType } from 'docx';
 import { saveAs } from 'file-saver';
 
 /**
@@ -8,6 +8,47 @@ import { saveAs } from 'file-saver';
  * @param {string} template - The selected template name (default: 'modern')
  * @returns {Promise<Blob>} - DOCX blob
  */
+
+// Helper function to create styled section headers with background color
+const createSectionHeader = (text, template = 'modern') => {
+  // Template-specific colors
+  const colors = {
+    modern: { bg: '2563eb', text: 'FFFFFF' }, // Blue background
+    classic: { bg: '1e293b', text: 'FFFFFF' }, // Dark slate background
+    minimal: { bg: 'F3F4F6', text: '1F2937' }, // Light gray background
+    executive: { bg: '1e293b', text: 'FFFFFF' }, // Dark slate background
+    creative: { bg: '7c3aed', text: 'FFFFFF' }, // Purple background
+    technical: { bg: '0f172a', text: 'FFFFFF' }, // Very dark background
+  };
+
+  const color = colors[template] || colors.modern;
+
+  return new Paragraph({
+    children: [
+      new TextRun({
+        text: text,
+        bold: true,
+        size: 24,
+        color: color.text,
+        allCaps: true,
+      }),
+    ],
+    spacing: { before: 300, after: 150 },
+    shading: {
+      type: ShadingType.SOLID,
+      color: color.bg,
+      fill: color.bg,
+    },
+    indent: { left: 150, right: 150 },
+    border: {
+      top: { style: BorderStyle.SINGLE, size: 1, color: color.bg },
+      bottom: { style: BorderStyle.SINGLE, size: 1, color: color.bg },
+      left: { style: BorderStyle.SINGLE, size: 1, color: color.bg },
+      right: { style: BorderStyle.SINGLE, size: 1, color: color.bg },
+    },
+  });
+};
+
 // Template configuration mapping
 const templateConfig = {
   modern: {
@@ -194,50 +235,23 @@ export const exportToDOCX = async (resumeData, template = 'modern') => {
       }
     }
 
-    // Summary Section - Template-specific title
+    // Summary Section - Template-specific title with styled background
     if (resumeData.summary) {
       if (config.summaryTitle) {
-        sections.push(
-          new Paragraph({
-            text: config.summaryTitle,
-            heading: HeadingLevel.HEADING_2,
-            spacing: { before: 200, after: 100 },
-            border: {
-              bottom: {
-                color: '000000',
-                space: 1,
-                style: BorderStyle.SINGLE,
-                size: 6,
-              },
-            },
-          })
-        );
+        sections.push(createSectionHeader(config.summaryTitle, template));
       }
       sections.push(
         new Paragraph({
           text: resumeData.summary,
           spacing: { after: 300 },
+          indent: { left: 100 },
         })
       );
     }
 
-    // Work Experience Section - Template-specific title
+    // Work Experience Section - Template-specific title with styled background
     if (resumeData.workExperience && resumeData.workExperience.length > 0) {
-      sections.push(
-        new Paragraph({
-          text: config.experienceTitle,
-          heading: HeadingLevel.HEADING_2,
-          spacing: { before: 200, after: 100 },
-          border: {
-            bottom: {
-              color: '000000',
-              space: 1,
-              style: BorderStyle.SINGLE,
-              size: 6,
-            },
-          },
-        })
-      );
+      sections.push(createSectionHeader(config.experienceTitle, template));
 
       resumeData.workExperience.forEach((exp, index) => {
         sections.push(
@@ -286,23 +300,9 @@ export const exportToDOCX = async (resumeData, template = 'modern') => {
       });
     }
 
-    // Education Section - Template-specific title
+    // Education Section - Template-specific title with styled background
     if (resumeData.education && resumeData.education.length > 0) {
-      sections.push(
-        new Paragraph({
-          text: config.educationTitle,
-          heading: HeadingLevel.HEADING_2,
-          spacing: { before: 200, after: 100 },
-          border: {
-            bottom: {
-              color: '000000',
-              space: 1,
-              style: BorderStyle.SINGLE,
-              size: 6,
-            },
-          },
-        })
-      );
+      sections.push(createSectionHeader(config.educationTitle, template));
 
       resumeData.education.forEach((edu, index) => {
         sections.push(
@@ -342,46 +342,21 @@ export const exportToDOCX = async (resumeData, template = 'modern') => {
       });
     }
 
-    // Skills Section - Template-specific title and separator
+    // Skills Section - Template-specific title and separator with styled background
     if (resumeData.skills && resumeData.skills.length > 0) {
+      sections.push(createSectionHeader(config.skillsTitle, template));
       sections.push(
-        new Paragraph({
-          text: config.skillsTitle,
-          heading: HeadingLevel.HEADING_2,
-          spacing: { before: 200, after: 100 },
-          border: {
-            bottom: {
-              color: '000000',
-              space: 1,
-              style: BorderStyle.SINGLE,
-              size: 6,
-            },
-          },
-        }),
         new Paragraph({
           text: resumeData.skills.join(config.skillsSeparator),
           spacing: { after: 300 },
+          indent: { left: 100 },
         })
       );
     }
 
-    // Projects Section - Template-specific title
+    // Projects Section - Template-specific title with styled background
     if (resumeData.projects && resumeData.projects.length > 0) {
-      sections.push(
-        new Paragraph({
-          text: config.projectsTitle,
-          heading: HeadingLevel.HEADING_2,
-          spacing: { before: 200, after: 100 },
-          border: {
-            bottom: {
-              color: '000000',
-              space: 1,
-              style: BorderStyle.SINGLE,
-              size: 6,
-            },
-          },
-        })
-      );
+      sections.push(createSectionHeader(config.projectsTitle, template));
 
       resumeData.projects.forEach((project, index) => {
         sections.push(
@@ -437,23 +412,9 @@ export const exportToDOCX = async (resumeData, template = 'modern') => {
       });
     }
 
-    // Certifications Section - Template-specific title
+    // Certifications Section - Template-specific title with styled background
     if (resumeData.certifications && resumeData.certifications.length > 0) {
-      sections.push(
-        new Paragraph({
-          text: config.certificationsTitle,
-          heading: HeadingLevel.HEADING_2,
-          spacing: { before: 200, after: 100 },
-          border: {
-            bottom: {
-              color: '000000',
-              space: 1,
-              style: BorderStyle.SINGLE,
-              size: 6,
-            },
-          },
-        })
-      );
+      sections.push(createSectionHeader(config.certificationsTitle, template));
 
       resumeData.certifications.forEach((cert, index) => {
         sections.push(
@@ -474,23 +435,9 @@ export const exportToDOCX = async (resumeData, template = 'modern') => {
       sections.push(new Paragraph({ spacing: { after: 300 } }));
     }
 
-    // Languages Section - Template-specific title
+    // Languages Section - Template-specific title with styled background
     if (resumeData.languages && resumeData.languages.length > 0) {
-      sections.push(
-        new Paragraph({
-          text: config.languagesTitle,
-          heading: HeadingLevel.HEADING_2,
-          spacing: { before: 200, after: 100 },
-          border: {
-            bottom: {
-              color: '000000',
-              space: 1,
-              style: BorderStyle.SINGLE,
-              size: 6,
-            },
-          },
-        })
-      );
+      sections.push(createSectionHeader(config.languagesTitle, template));
 
       resumeData.languages.forEach((lang) => {
         sections.push(
@@ -503,57 +450,74 @@ export const exportToDOCX = async (resumeData, template = 'modern') => {
       sections.push(new Paragraph({ spacing: { after: 300 } }));
     }
 
-    // Achievements Section - Template-specific title
+    // Achievements Section - Template-specific title with styled background
     if (resumeData.achievements) {
+      sections.push(createSectionHeader(config.achievementsTitle, template));
       sections.push(
-        new Paragraph({
-          text: config.achievementsTitle,
-          heading: HeadingLevel.HEADING_2,
-          spacing: { before: 200, after: 100 },
-          border: {
-            bottom: {
-              color: '000000',
-              space: 1,
-              style: BorderStyle.SINGLE,
-              size: 6,
-            },
-          },
-        }),
         new Paragraph({
           text: resumeData.achievements,
           spacing: { after: 300 },
+          indent: { left: 100 },
         })
       );
     }
 
-    // Interests Section - Template-specific title
+    // Interests Section - Template-specific title with styled background
     if (resumeData.interests) {
+      sections.push(createSectionHeader(config.interestsTitle, template));
       sections.push(
-        new Paragraph({
-          text: config.interestsTitle,
-          heading: HeadingLevel.HEADING_2,
-          spacing: { before: 200, after: 100 },
-          border: {
-            bottom: {
-              color: '000000',
-              space: 1,
-              style: BorderStyle.SINGLE,
-              size: 6,
-            },
-          },
-        }),
         new Paragraph({
           text: resumeData.interests,
           spacing: { after: 300 },
+          indent: { left: 100 },
         })
       );
     }
 
-    // Create the document
+    // Create the document with page borders
     const doc = new Document({
       sections: [
         {
-          properties: {},
+          properties: {
+            page: {
+              margin: {
+                top: 720, // 0.5 inch
+                right: 720,
+                bottom: 720,
+                left: 720,
+              },
+              borders: {
+                pageBorderTop: {
+                  style: BorderStyle.SINGLE,
+                  size: 12,
+                  color: template === 'modern' ? '2563eb' : 
+                         template === 'creative' ? '7c3aed' :
+                         template === 'technical' ? '0f172a' : '1e293b',
+                },
+                pageBorderBottom: {
+                  style: BorderStyle.SINGLE,
+                  size: 12,
+                  color: template === 'modern' ? '2563eb' : 
+                         template === 'creative' ? '7c3aed' :
+                         template === 'technical' ? '0f172a' : '1e293b',
+                },
+                pageBorderLeft: {
+                  style: BorderStyle.SINGLE,
+                  size: 12,
+                  color: template === 'modern' ? '2563eb' : 
+                         template === 'creative' ? '7c3aed' :
+                         template === 'technical' ? '0f172a' : '1e293b',
+                },
+                pageBorderRight: {
+                  style: BorderStyle.SINGLE,
+                  size: 12,
+                  color: template === 'modern' ? '2563eb' : 
+                         template === 'creative' ? '7c3aed' :
+                         template === 'technical' ? '0f172a' : '1e293b',
+                },
+              },
+            },
+          },
           children: sections,
         },
       ],

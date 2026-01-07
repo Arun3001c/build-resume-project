@@ -7,43 +7,56 @@ import { Card } from '../components/ui/Card';
 import { ArrowLeft, Check } from 'lucide-react';
 import { TEMPLATE_DISPLAY_NAMES } from '../utils/constants';
 import './TemplateSelection.css';
+import classic from '../assets/classic.jpg';
+import modern from '../assets/modern_template.jpg';
+import minimal from '../assets/minimal.jpg';
+import executive from '../assets/executive.png';
+import creative from '../assets/creative.jpg';
+import technical from '../assets/technical.jpg';
 
 const templates = [
+  {
+    id: 'executive',
+    name: 'Executive Premium',
+    description: 'Sophisticated layout for senior positions',
+    color: '#1e293b',
+    image: executive
+  },
   {
     id: 'modern',
     name: 'Modern Professional',
     description: 'Clean layout with subtle accent colors',
-    color: '#2563eb'
+    color: '#2563eb',
+    image: modern
   },
   {
     id: 'classic',
     name: 'Classic Traditional',
     description: 'Timeless design for conservative industries',
-    color: '#1e293b'
+    color: '#1e293b',
+    image: classic
   },
   {
     id: 'minimal',
     name: 'Minimal Clean',
     description: 'Simple and elegant with maximum readability',
-    color: '#0f172a'
+    color: '#0f172a',
+    image: minimal
   },
-  {
-    id: 'executive',
-    name: 'Executive Premium',
-    description: 'Sophisticated layout for senior positions',
-    color: '#1e293b'
-  },
+  
   {
     id: 'creative',
     name: 'Creative Modern',
     description: 'Bold design for creative professionals',
-    color: '#7c3aed'
+    color: '#7c3aed',
+    image: creative
   },
   {
     id: 'technical',
     name: 'Technical Pro',
     description: 'Optimized for technical roles and IT professionals',
-    color: '#0f172a'
+    color: '#0f172a',
+    image: technical
   }
 ];
 
@@ -106,14 +119,11 @@ const TemplateSelection = () => {
               onClick={() => handleTemplateSelect(template.id)}
             >
               <div className="template-preview">
-                <div 
-                  className="template-color-bar"
-                  style={{ backgroundColor: template.color }}
-                ></div>
-                <div className="template-content">
-                  <div className="template-name-large">{template.name}</div>
-                  <div className="template-preview-text">Preview</div>
-                </div>
+                <img 
+                  src={template.image} 
+                  alt={template.name}
+                  className="template-image"
+                />
                 
                 {selectedTemplate === template.id && (
                   <div className="selected-indicator">

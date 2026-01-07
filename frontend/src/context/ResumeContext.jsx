@@ -54,7 +54,7 @@ export const ResumeProvider = ({ children }) => {
 
   const [selectedTemplate, setSelectedTemplate] = useState(() => {
     const saved = localStorage.getItem('selectedTemplate');
-    return saved || 'modern';
+    return saved || null;
   });
 
   const [isSaving, setIsSaving] = useState(false);
@@ -64,7 +64,11 @@ export const ResumeProvider = ({ children }) => {
   useEffect(() => {
     try {
       localStorage.setItem('resumeData', JSON.stringify(resumeData));
-      localStorage.setItem('selectedTemplate', selectedTemplate);
+      if (selectedTemplate) {
+        localStorage.setItem('selectedTemplate', selectedTemplate);
+      } else {
+        localStorage.removeItem('selectedTemplate');
+      }
       setLastSaved(new Date());
     } catch (error) {
       console.error('Error saving to localStorage:', error);

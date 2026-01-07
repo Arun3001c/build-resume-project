@@ -44,7 +44,7 @@ const ResumePreview = () => {
         </div>
       </div>
       <div className="preview-content">
-        <div className="a4-paper" key={selectedTemplate}>
+        <div className="a4-paper" id="resume-content-for-pdf" key={selectedTemplate}>
           {renderTemplate}
         </div>
       </div>

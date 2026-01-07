@@ -3,16 +3,22 @@
 .landing-page {
   min-height: 100vh;
   /* background-color: #f8fafc; */
+  background: linear-gradient(135deg, #0f111a 0%, #12121f 50%, #0f111a 100%);
+
 }
 
 /* Header */
 .landing-header {
-  background-color: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid #e2e8f0;
+  /* background-color: rgba(255, 255, 255, 0.9); */
+  /* backdrop-filter: blur(8px); */
+  /* border-bottom: 1px solid #e2e8f0; */
+  background-color: rgba(15, 17, 26, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   position: sticky;
   top: 0;
   z-index: 50;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 .header-container {
@@ -61,7 +67,8 @@
 .hero-section {
   min-height: 100vh;
   padding: 80px 24px;
-  background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #f8fafc 100%);
+  /* background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #f8fafc 100%); */
+  background: linear-gradient(135deg, #0f111a 0%, #12121f 50%, #0f111a 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -69,13 +76,22 @@
 
 /* Welcome Screen */
 .welcome-screen {
-  width: 100%;
+  /* width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 3rem;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.1); */
+   width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(239, 68, 68, 0.2);
+  background-color: rgba(26, 27, 38, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
 }
 
 .welcome-content {
@@ -139,7 +155,7 @@
   margin-right: 6.25rem;
 }
 
-.welcome-next-button {
+/* .welcome-next-button {
   background-color: #FF4B6C;
   color: white;
   padding: 0.75rem 4rem;
@@ -154,7 +170,28 @@
 
 .welcome-next-button:hover {
   background-color: #FF3557;
+} */
+
+.welcome-next-button {
+  background: linear-gradient(135deg, #ef4444, #ec4899);
+  color: white;
+  padding: 1.5rem 4rem;
+  border-radius: 9999px;
+  font-size: 1.125rem;
+  text-transform: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4), 0 0 30px rgba(236, 72, 153, 0.3);
+  transition: all 0.3s ease;
 }
+
+.welcome-next-button:hover {
+  background: linear-gradient(135deg, #dc2626, #db2777);
+  box-shadow: 0 8px 25px rgba(239, 68, 68, 0.6), 0 0 40px rgba(236, 72, 153, 0.4);
+  transform: translateY(-2px);
+}
+
 
 /* Responsive adjustments for Welcome Screen */
 @media (max-width: 768px) {
